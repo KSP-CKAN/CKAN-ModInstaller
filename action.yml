@@ -1,0 +1,39 @@
+name: CKAN Mod Installer
+description: Installs mods for use as build dependencies
+author:
+  - HebaruSan
+
+inputs:
+
+  output path:
+    description: |-
+      Where to put the generated game instance.
+    required: true
+
+  mods:
+    description: |-
+      Descriptors of mods to install.
+      Either simple identifier or identifier=version.
+    required: true
+
+  install filters:
+    description: |-
+      Substrings of file names to skip installing to save space and time.
+    required: false
+    default: .dds .png .bmp .mu .mbm .jpg .wav
+
+  game:
+    description: |-
+      Short name of the game for which to install mods, either KSP or KSP2.
+    required: false
+    default: KSP
+
+  game versions:
+    description: |-
+      Game versions to mark as compatible.
+      First version is used as the installed version and must be a full version rather than a glob.
+    required: true
+
+run:
+  using: docker
+  image: docker://kspckan/mod-installer
