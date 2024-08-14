@@ -21,12 +21,12 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         run: |-
-          echo "::set-output name=HAS_SECRETS::${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_PASSWORD != '' }}"
+          echo 'HAS_SECRETS=${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_PASSWORD != '' }}' >> $GITHUB_OUTPUT
 
   deploy:
     name: Build and deploy
     needs: check-secrets
-    if: needs.check-secrets.outputs.HAS_SECRETS
+    if: needs.check-secrets.outputs.HAS_SECRETS == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
