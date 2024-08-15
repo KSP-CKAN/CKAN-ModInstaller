@@ -12,6 +12,13 @@ then
     exit 2
 fi
 
+# Set up preloaded repo metadata
+if [[ -d /usr/local/share/CKAN -a ! -d ~/.local/share/CKAN ]]
+then
+    mkdir -p ~/.local/share
+    cp -a /usr/local/share/CKAN ~/.local/share
+fi
+
 GAME=${INPUT_GAME:-KSP}
 MAIN_GAME_VERSION=${INPUT_GAME_VERSIONS%% *}
 OTHER_GAME_VERSIONS=${INPUT_GAME_VERSIONS#* }
@@ -54,6 +61,5 @@ ckan instance fake fake_inst "$INPUT_OUTPUT_PATH" $MAIN_GAME_VERSION --game $GAM
 ckan prompt --headless <<EOF
 $COMPAT_COMMAND
 $FILTER_COMMAND
-update
 install --no-recommends $INPUT_MODS
 EOF

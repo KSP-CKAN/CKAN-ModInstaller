@@ -24,8 +24,14 @@ RUN apt-get update \
 RUN apt-get clean \
     && rm -r /var/lib/apt/lists /var/log/dpkg.log /var/log/apt
 
+# Get game versions so we can pick a default
 RUN curl -sf -o ksp-builds.json https://raw.githubusercontent.com/KSP-CKAN/CKAN-meta/master/builds.json
 RUN curl -sf -o ksp2-builds.json https://raw.githubusercontent.com/KSP-CKAN/KSP2-CKAN-meta/main/builds.json
+
+# Preload metadata repos outside home dir
+RUN ckan update --asroot -g KSP
+RUN ckan update --asroot -g KSP2
+RUN mv ~/.local/share/CKAN /usr/local/share
 
 ADD mod-installer.sh /usr/local/bin/.
 
