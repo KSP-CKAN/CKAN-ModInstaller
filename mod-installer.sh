@@ -18,6 +18,7 @@ then
     mkdir -p ~/.local/share
     cp -a /usr/local/share/CKAN ~/.local/share
 fi
+ckan cache set $HOME/.local/share/CKAN/downloads
 
 GAME=${INPUT_GAME:-KSP}
 MAIN_GAME_VERSION=${INPUT_GAME_VERSIONS%% *}
