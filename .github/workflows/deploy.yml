@@ -8,6 +8,8 @@ on:
   repository_dispatch:
     types:
       - deploy
+  schedule:
+    - cron: '53 23 * * *'
 
 jobs:
 
